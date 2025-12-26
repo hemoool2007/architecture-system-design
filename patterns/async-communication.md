@@ -105,3 +105,74 @@ Ví dụ:
 
 ```csharp
 public record OrderCreatedEvent(Guid OrderId, decimal TotalAmount);
+Publish Event
+await _bus.Publish(new OrderCreatedEvent(order.Id, order.Total));
+
+Consume Event
+public class OrderCreatedConsumer : IConsumer<OrderCreatedEvent>
+{
+    public async Task Consume(ConsumeContext<OrderCreatedEvent> context)
+    {
+        var message = context.Message;
+        // handle event
+    }
+}
+
+🔄 Saga Pattern
+
+Saga dùng để xử lý business transaction phân tán.
+
+2 kiểu Saga
+
+Orchestration: 1 coordinator điều phối
+
+Choreography: các service phản ứng event
+
+Khi dùng Saga
+
+Nhiều bước business
+
+Có rollback logic
+
+Không dùng distributed transaction
+
+⚖️ Trade-offs & Kinh nghiệm
+Ưu điểm
+
+Loose coupling
+
+Scale tốt
+
+Tăng resiliency
+
+Phù hợp domain phức tạp
+
+Hạn chế
+
+Debug khó hơn
+
+Eventual consistency
+
+Cần monitoring tốt
+
+Kinh nghiệm thực tế
+
+Không async hóa mọi thứ
+
+Bắt đầu sync, scale thì async
+
+Event name phải rõ nghĩa
+
+Log & trace event đầy đủ
+
+📌 Kết luận
+
+Async Communication là chìa khóa cho hệ thống hiện đại:
+
+Giảm coupling
+
+Tăng scalability
+
+Chuẩn bị tốt cho microservices
+
+Với Solution Architect .NET, hiểu rõ khi nào nên dùng async và khi nào không là điểm cộng rất lớn khi phỏng vấn.
